@@ -5,28 +5,32 @@ entity demultiplexer1_8_tb is
 end demultiplexer1_8_tb;
 
 architecture test of demultiplexer1_8_tb is
-    signal input_test, select_test, output_test: std_logic
+    signal input_test: std_logic;
+    signal select_test: std_logic_vector(2 downto 0);
+    signal output_test: std_logic_vector(7 downto 0);
+
     component demultiplexer1_8
-        port(
+        port (
             i: in std_logic;
-            S: in std_logic_vector(2 to 0);
-            o: out std_logic_vector(8 to 0)
+            S: in std_logic_vector(2 downto 0);
+            o: out std_logic_vector(7 downto 0)
         );
-        end component;
+    end component;
 
 begin
-    demux: demultiplexer1_8 portmap(i=> input_test, o=>output_test, s=>select_test);
+    demux: demultiplexer1_8 port map(i => input_test, S => select_test, o => output_test);
+
     process
     begin
-        wait for 500ms;
+        wait for 500 ms;
         input_test <= '0';
-        select_test <= '000';
+        select_test <= "000";
 
-        wait for 500ms;
+        wait for 500 ms;
         input_test <= '1';
-        select_test<='111';
+        select_test <= "111";
 
-        wait for 500ms;
+        wait for 500 ms;
         wait;
     end process;
 end test;
